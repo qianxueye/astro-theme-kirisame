@@ -1,0 +1,9 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import Icon from '@qianxueye/astro-theme-kirisame/components/Icon.astro';
+import { config } from '../../site.config';
+import { getPosts, topics } from '../../lib/posts';
+import '../../styles/custom.css';
+const items = topics(await getPosts());
+---
+<SiteLayout config={config} title="专题"><section class="index-page" data-page="topics"><header class="index-heading"><span class="eyebrow">从一个问题出发</span><h1>沿着主题，继续读。</h1></header><div class="topic-cards">{items.map((item, index) => <a class="topic-card" href={item.href}><span class="topic-number">{String(index + 1).padStart(2, '0')}</span><h2>{item.name}</h2><div class="topic-card-bottom"><span>{item.count} 篇文章</span><Icon name="arrow" /></div></a>)}</div></section></SiteLayout>

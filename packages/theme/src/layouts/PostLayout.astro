@@ -1,0 +1,26 @@
+---
+import type { MarkdownHeading } from 'astro';
+import type { ThemeConfig, PostSummary } from '../types';
+import { withBase, formatDate, topicPath } from '../lib/content.js';
+import SiteLayout from './SiteLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import Icon from '../components/Icon.astro';
+interface Props { config: ThemeConfig; post: PostSummary; headings: MarkdownHeading[]; related?: PostSummary[] }
+const { config, post, headings, related = [] } = Astro.props;
+---
+<SiteLayout config={config} title={post.title} description={post.description} article published={post.published} updated={post.updated}>
+  <slot name="head" slot="head" />
+  <section class="article-page" data-page={`article/${post.id}`}><div class="article-wrap">
+    <header class="article-header"><a href={withBase(config.base, '/')} class="back-link"><Icon name="back" />返回文章</a><div class="article-kicker"><a href={topicPath(post.topic, config.base)}>{post.topic}</a></div><h1 data-pagefind-meta="title">{post.title}</h1><p class="article-deck">{post.description}</p>
+      <div class="article-meta"><span class="author-mark" aria-hidden="true">{config.author.slice(0,1)}</span><span>{config.author}</span><span class="meta-dot">·</span><time datetime={post.published.toISOString()}>{formatDate(post.published)}</time><span class="meta-dot">·</span><span>{post.minutes} 分钟阅读</span>{post.updated && <span>更新于 {formatDate(post.updated)}</span>}</div>
+      <div class="article-tools js-only"><span></span><div><button class="tool-button" data-open="reading-dialog"><span class="type-symbol" aria-hidden="true">Aa</span>阅读设置</button><button class="tool-button focus-toggle" aria-pressed="false"><Icon name="focus" />专注阅读</button><button class="tool-button copy-link">复制链接</button></div></div>
+    </header>
+    <div class:list={['reading-grid', { 'without-sidebar': !config.sidebar }]}>
+      <article class="prose" aria-label="文章正文"><TableOfContents headings={headings} mobile /><div class="markdown" data-pagefind-body><slot /></div><div class="article-end" aria-hidden="true">◇</div><slot name="after-post" />
+        {related.length > 0 && <section class="related" data-pagefind-ignore><div class="section-heading"><h2>继续读</h2></div>{related.map(item => <a class="related-link" href={item.href}><span class="post-kind">{item.topic}</span><span>{item.title}</span><Icon name="arrow" /></a>)}</section>}
+      </article>
+      {config.sidebar && <aside class="reading-aside" aria-label="阅读辅助"><div class="toc-sticky"><TableOfContents headings={headings} /><button class="back-top subtle-link js-only">回到顶部<Icon name="top" /></button><slot name="sidebar" /></div></aside>}
+    </div>
+  </div></section>
+  <slot name="body-end" slot="body-end" />
+</SiteLayout>

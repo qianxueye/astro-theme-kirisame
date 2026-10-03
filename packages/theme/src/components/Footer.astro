@@ -1,0 +1,11 @@
+---
+import type { ThemeConfig } from '../types';
+import { withBase } from '../lib/content.js';
+import Icon from './Icon.astro';
+interface Props { config: ThemeConfig }
+const { config } = Astro.props;
+---
+<footer class="site-footer" data-pagefind-ignore>
+  <div><a class="footer-brand" href={withBase(config.base, '/')}>{config.title}</a><span>© {new Date().getFullYear()} · {config.footer}</span></div>
+  <nav aria-label="页脚导航"><a href={withBase(config.base, '/rss.xml')}>RSS</a><button type="button" class="js-only" data-open="reading-dialog">阅读设置</button><a href={withBase(config.base, '/privacy/')}>隐私</a><a href={withBase(config.base, '/about/')}>关于</a><button class="back-top js-only" aria-label="回到页面顶部"><Icon name="top" /></button></nav>
+</footer>

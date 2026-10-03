@@ -1,0 +1,24 @@
+---
+import type { ThemeConfig } from '../types';
+import { withBase } from '../lib/content.js';
+import Icon from './Icon.astro';
+interface Props { config: ThemeConfig }
+const { config } = Astro.props;
+const current = Astro.url.pathname;
+const home = withBase(config.base, '/');
+const active = (path: string) => path === '/' ? current === home || current.startsWith(withBase(config.base, '/posts/')) : current.startsWith(withBase(config.base, path));
+---
+<header class="site-header" data-pagefind-ignore>
+  <div class="header-inner">
+    <a class="brand" href={home} aria-label={`${config.title}，返回首页`}><span class="brand-symbol" aria-hidden="true">◩</span><span class="brand-name">{config.title}</span><span class="brand-divider">/</span><span class="brand-note">{config.tagline}</span></a>
+    <nav class="desktop-nav" aria-label="主导航">{config.nav.map(item => <a href={withBase(config.base, item.href)} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a>)}</nav>
+    <div class="header-tools">
+      {config.search && <button class="search-trigger icon-button js-only" type="button" data-open="search-dialog" aria-label="搜索文章，快捷键 Command K 或 Ctrl K"><Icon name="search" /><kbd>⌘ K</kbd></button>}
+      <span class="tools-divider js-only" aria-hidden="true"></span>
+      <button class="theme-toggle icon-button js-only" type="button" aria-label="切换为深色模式"><span class="sun-icon"><Icon name="sun" /></span><span class="moon-icon"><Icon name="moon" /></span></button>
+      <button class="menu-toggle icon-button js-only" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="展开导航"><Icon name="menu" /></button>
+    </div>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="手机主导航" hidden>{config.nav.map(item => <a href={withBase(config.base, item.href)}>{item.label}</a>)}</nav>
+  <noscript><nav class="nojs-nav">{config.nav.map(item => <a href={withBase(config.base, item.href)}>{item.label}</a>)}</nav></noscript>
+</header>

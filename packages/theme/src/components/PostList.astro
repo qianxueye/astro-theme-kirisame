@@ -1,0 +1,14 @@
+---
+import type { PostSummary } from '../types';
+import { formatDate } from '../lib/content.js';
+import Icon from './Icon.astro';
+interface Props { posts: PostSummary[]; id?: string }
+const { posts, id } = Astro.props;
+---
+<div id={id}>
+  {posts.map(post => <article class="post-row" data-topic={post.topic}>
+    <div class="post-date"><time datetime={post.published.toISOString()}>{formatDate(post.published).slice(5)}</time><span>{post.published.getUTCFullYear()}</span></div>
+    <div class="post-copy"><div class="post-kind">{post.topic}<span class="meta-dot">·</span>{post.minutes} 分钟</div><h3><a href={post.href}>{post.title}</a></h3><p>{post.description}</p></div>
+    <a href={post.href} class="row-arrow" tabindex="-1" aria-hidden="true"><Icon name="arrow" /></a>
+  </article>)}
+</div>

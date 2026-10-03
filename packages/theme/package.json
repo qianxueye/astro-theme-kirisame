@@ -1,0 +1,42 @@
+{
+  "name": "@qianxueye/astro-theme-kirisame",
+  "version": "0.1.0",
+  "description": "Kirisame is a reading-first Astro theme with soft colors, CJK-friendly typography, and gentle motion.",
+  "type": "module",
+  "license": "MIT",
+  "author": "qianxueye",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qianxueye/astro-theme-kirisame.git",
+    "directory": "packages/theme"
+  },
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "blog",
+    "cjk",
+    "typography"
+  ],
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./layouts/*": "./src/layouts/*",
+    "./components/*": "./src/components/*",
+    "./styles/*": "./src/styles/*",
+    "./lib/*": "./src/lib/*"
+  },
+  "peerDependencies": {
+    "astro": "^7.3.5"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

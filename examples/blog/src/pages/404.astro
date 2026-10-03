@@ -1,0 +1,7 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import { withBase } from '@qianxueye/astro-theme-kirisame/lib/content.js';
+import { config } from '../site.config';
+import '../styles/custom.css';
+---
+<SiteLayout config={config} title="这页还没有写下。" noindex={true}><section class="simple-page" data-page="404"><header class="index-heading"><h1>这页还没有写下。</h1></header><div class="prose"><p>页面不存在，或者文章地址已经改变。</p><p><a href={withBase(config.base, "/")}>返回首页</a></p></div></section></SiteLayout>

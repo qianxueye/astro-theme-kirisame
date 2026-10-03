@@ -1,0 +1,6 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import { config } from '../site.config';
+import '../styles/custom.css';
+---
+<SiteLayout config={config} title="只在本地，记住阅读偏好。" noindex={false}><section class="simple-page" data-page="privacy"><header class="index-heading"><h1>只在本地，记住阅读偏好。</h1></header><div class="prose"><p>这个示例站不加载广告、分析服务、远程字体或 AI 接口。明暗模式、字号、字体和动效偏好仅保存在当前浏览器。</p><p>搜索索引从同一站点加载，关键词在浏览器内匹配，不上传至搜索服务。接入广告或统计后，应按实际服务更新此页面。</p><button class="outline-button js-only" id="reset-settings">清除阅读偏好</button></div></section></SiteLayout>

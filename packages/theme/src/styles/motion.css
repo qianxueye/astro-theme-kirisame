@@ -1,0 +1,74 @@
+/* Motion layer. Original v3 color/typography/layout tokens are unchanged. */
+:root{--motion-ease:cubic-bezier(.22,1,.36,1)}
+.desktop-nav,.filters{position:relative;isolation:isolate}
+.nav-marker,.filter-marker{position:absolute;pointer-events:none;transform-origin:top left;z-index:-1}
+.nav-marker{background:var(--accent);border-radius:4px}
+.filter-marker{background:var(--accent-soft);border-radius:3px}
+.desktop-nav.has-motion-marker a[aria-current='page']::after{display:none}
+.filters.has-motion-marker .filter.active{background:transparent;border-color:transparent}
+#home-posts{overflow-anchor:none}.list-resizing{overflow:hidden}
+.reading-progress span{width:100%;transform:scaleX(0);transform-origin:left center;transition:transform 120ms linear}
+.motion-hint{margin-top:9px;font-size:11px;line-height:1.8;color:var(--muted)}
+.motion-replay{margin-top:11px;font-size:12px;min-height:38px;gap:8px}
+.motion-replay .icon{width:15px;height:15px}
+.mobile-toc.toc-animating{overflow:hidden}
+.mobile-menu{overflow:hidden}
+.motion-replay:disabled{opacity:.5;cursor:default}
+
+@media(prefers-reduced-motion:no-preference){
+ :root:not([data-motion='off']) .icon-button,
+ :root:not([data-motion='off']) .tool-button,
+ :root:not([data-motion='off']) .outline-button,
+ :root:not([data-motion='off']) .filter,
+ :root:not([data-motion='off']) .segmented button,
+ :root:not([data-motion='off']) .mobile-menu a{
+  transition:transform 200ms var(--motion-ease),color 180ms ease,background-color 180ms ease,border-color 180ms ease;
+ }
+ :root:not([data-motion='off']) .featured,
+ :root:not([data-motion='off']) .topic-card{
+  transition:transform 300ms var(--motion-ease),box-shadow 300ms ease,border-color 200ms ease;
+ }
+ :root:not([data-motion='off']) .row-arrow .icon,
+ :root:not([data-motion='off']) .topic-card-bottom .icon,
+ :root:not([data-motion='off']) .mobile-toc summary .icon{
+  transition:transform 280ms var(--motion-ease),color 180ms ease;
+ }
+ :root:not([data-motion='off']) .toc a{
+  transition:color 200ms ease,border-color 220ms ease,background-color 200ms ease;
+ }
+ :root:not([data-motion='off']) .text-link{
+  background-image:linear-gradient(var(--accent),var(--accent));
+  background-position:left calc(100% - 3px);background-size:0 1px;background-repeat:no-repeat;
+  transition:background-size 260ms var(--motion-ease),color 180ms ease;
+ }
+ :root:not([data-motion='off']) .text-link:hover{background-size:calc(100% - 23px) 1px}
+ :root:not([data-motion='off']) .brand-symbol{transition:transform 300ms var(--motion-ease)}
+ :root:not([data-motion='off']) .brand:hover .brand-symbol{transform:rotate(0deg)}
+ :root:not([data-motion='off']) .icon-button:active,
+ :root:not([data-motion='off']) .tool-button:active,
+ :root:not([data-motion='off']) .outline-button:active{transform:scale(.96)}
+ :root:not([data-motion='off']) .filter:active,
+ :root:not([data-motion='off']) .segmented button:active{transform:scale(.98)}
+ :root:not([data-motion='off']) dialog[open]::backdrop{animation:quiet-backdrop-in 220ms ease both}
+ :root:not([data-motion='off']) dialog.closing::backdrop{animation:quiet-backdrop-out 150ms ease both}
+ .theme-shifting body,.theme-shifting .featured,.theme-shifting .topic-card,
+ .theme-shifting .site-header,.theme-shifting .site-footer,.theme-shifting .post-row,
+ .theme-shifting .callout,.theme-shifting .code-block,.theme-shifting .article-tools,
+ .theme-shifting .filter-marker,.theme-shifting .nav-marker,.theme-shifting dialog{
+  transition:background-color 280ms ease,color 280ms ease,border-color 280ms ease;
+ }
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ :root:not([data-motion='off']) .icon-button:hover,
+ :root:not([data-motion='off']) .tool-button:hover{transform:translateY(-1px)}
+ :root:not([data-motion='off']) .featured:hover,
+ :root:not([data-motion='off']) .topic-card:hover{transform:translateY(-3px);box-shadow:0 9px 25px #17243e0c}
+ :root:not([data-motion='off']) .post-row:hover .row-arrow .icon,
+ :root:not([data-motion='off']) .topic-card:hover .topic-card-bottom .icon{transform:translateX(4px)}
+}
+@keyframes quiet-backdrop-in{from{opacity:0}to{opacity:1}}
+@keyframes quiet-backdrop-out{from{opacity:1}to{opacity:0}}
+:root[data-motion='off']{scroll-behavior:auto}
+:root[data-motion='off'] *, :root[data-motion='off'] *::before, :root[data-motion='off'] *::after{animation:none!important;transition:none!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media print{*,*::before,*::after{animation:none!important;transition:none!important}}

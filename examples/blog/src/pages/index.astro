@@ -1,0 +1,9 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import Home from '@qianxueye/astro-theme-kirisame/components/Home.astro';
+import { config } from '../site.config';
+import { getPosts, summary, topics } from '../lib/posts';
+import '../styles/custom.css';
+const posts = await getPosts();
+---
+<SiteLayout config={config}><Home config={config} posts={posts.map(summary)} topics={topics(posts)} /></SiteLayout>

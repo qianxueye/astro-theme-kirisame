@@ -1,0 +1,25 @@
+---
+import type { ThemeConfig, PostSummary, Topic } from '../types';
+import { withBase, formatDate } from '../lib/content.js';
+import PostList from './PostList.astro';
+import Icon from './Icon.astro';
+interface Props { config: ThemeConfig; posts: PostSummary[]; topics: Topic[] }
+const { config, posts, topics } = Astro.props;
+const featured = posts.find(post => post.featured) ?? posts[0];
+---
+<section data-page="home">
+  <div class="hero"><div><div class="eyebrow"><span class="status-dot"></span>{config.hero.eyebrow}</div><h1>{config.hero.title}<em>{config.hero.accent}</em></h1><p>{config.hero.description}</p></div><div class="hero-note"><span class="edition-mark" aria-hidden="true">✳</span><p>{config.hero.note}</p><span class="mono">NOTES, NOT NOISE.</span></div></div>
+  <div class:list={['home-grid', { 'without-sidebar': !config.sidebar }]}><div class="home-main">
+    {featured && <article class="featured"><div class="eyebrow"><span class="short-rule"></span>从这里开始</div><h2><a href={featured.href}>{featured.title}</a></h2><p>{featured.description}</p><div class="feature-bottom"><span class="quiet-meta">{formatDate(featured.published)} · {featured.minutes} 分钟</span><a class="text-link" href={featured.href}>读这篇文章<Icon name="arrow" /></a></div></article>}
+    <section class="latest" aria-labelledby="latest-title"><div class="section-heading"><h2 id="latest-title">最近更新</h2><a class="subtle-link" href={withBase(config.base, '/archive/')}>查看归档<Icon name="arrow" /></a></div>
+      <div class="filters js-only" role="group" aria-label="筛选文章主题"><button class="filter active" data-filter="all" aria-pressed="true">全部</button>{topics.map(topic => <button class="filter" data-filter={topic.name} aria-pressed="false">{topic.name}</button>)}</div>
+      <PostList posts={posts} id="home-posts" />
+      <p id="filter-empty" class="empty-state" hidden={posts.length > 0}>这个主题暂时没有文章。</p>
+    </section>
+  </div>{config.sidebar && <aside class="home-aside" aria-label="博客介绍与专题">
+    <section class="aside-intro"><span class="small-label">关于这里</span><h2>{config.title}</h2><p>{config.description}</p><a class="text-link" href={withBase(config.base, '/about/')}>认识这个小站<Icon name="arrow" /></a></section>
+    <section class="aside-topics"><h2 class="small-label">沿着主题读</h2>{topics.map(topic => <a class="topic-link" href={topic.href}><span>{topic.name}</span><span class="topic-count">{String(topic.count).padStart(2,'0')}<Icon name="arrow" /></span></a>)}</section>
+    <section class="rss-note"><div class="rss-heading"><Icon name="rss" /><h2>在阅读器里，继续读。</h2></div><p>不用注册，也不用等待推荐。</p><a class="subtle-link" href={withBase(config.base, '/rss.xml')}>订阅 RSS<Icon name="arrow" /></a></section>
+    <slot name="sidebar" />
+  </aside>}</div>
+</section>

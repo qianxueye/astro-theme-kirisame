@@ -1,0 +1,31 @@
+/* Additions for real Markdown and native multi-page navigation. */
+:root:not(.has-js) .js-only{display:none!important}
+.nojs-nav{display:flex;gap:24px;flex-wrap:wrap;padding:16px 0}
+.nojs-nav a{color:var(--accent)}
+.without-sidebar{grid-template-columns:minmax(0,704px);justify-content:center}
+.markdown h2{margin:2.3em 0 1em;scroll-margin-top:32px;display:block}
+.markdown>h2:first-child{margin-top:0}
+.markdown h3{margin:1.7em 0 .7em;font-size:1.08em;color:var(--ink);scroll-margin-top:32px}
+.markdown :is(ul,ol){padding-left:1.5em;margin:1em 0 1.4em}
+.markdown li{margin:.5em 0}.markdown li>p{margin:.4em 0}
+.markdown img{display:block;max-width:100%;height:auto;border-radius:5px;margin:1.5em auto}
+.markdown figure{margin:1.5em 0}.markdown figcaption{font-size:.75em;color:var(--muted);text-align:center}
+.markdown :not(pre)>code{font-size:.85em;padding:.1em .3em;background:var(--surface);border-radius:3px;overflow-wrap:anywhere}
+.markdown pre{background:var(--surface)!important;border:1px solid var(--line);border-radius:5px;margin:1.5em 0;overflow-x:auto;max-width:100%;white-space:pre;position:relative}
+.markdown table{display:block;max-width:100%;min-width:0;width:100%;overflow-x:auto;font-size:.8em;margin:1.5em 0}
+.markdown th,.markdown td{min-width:7em;padding-right:22px}
+.markdown hr{border:0;border-top:1px solid var(--line);margin:2em 0}
+.markdown pre code{font-size:14px;word-break:normal;overflow-wrap:normal}
+.code-copy{display:block;margin:-20px 0 24px auto;font-size:12px;color:var(--muted);min-height:36px}
+.toc-sub{padding-left:12px}.mobile-toc ol{max-height:45vh;overflow:auto}
+.reading-grid>.prose{max-width:min(100%,37em)}
+:root[data-theme='dark'] .astro-code,:root[data-theme='dark'] .astro-code span{color:var(--shiki-dark)!important;background-color:var(--shiki-dark-bg)!important}
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:kirisame-page-out 120ms ease both}
+::view-transition-new(root){animation:kirisame-page-in 180ms ease both}
+@keyframes kirisame-page-out{to{opacity:0}}
+@keyframes kirisame-page-in{from{opacity:0}}
+:root[data-motion='off']::view-transition-old(root),:root[data-motion='off']::view-transition-new(root){animation:none!important}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none!important}}
+@media(max-width:640px){.hero h1{font-size:clamp(29px,7.4vw,39px)}.brand-name{max-width:42vw;overflow:hidden;text-overflow:ellipsis}.article-meta{flex-wrap:wrap}.article-tools>div{gap:1px}.tool-button{font-size:11px}}
+@media print{.js-only,.mobile-menu,.nojs-nav,.code-copy{display:none!important}.markdown pre{white-space:pre-wrap}.markdown a{color:inherit!important}}

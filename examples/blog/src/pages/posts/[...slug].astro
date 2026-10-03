@@ -1,0 +1,14 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '@qianxueye/astro-theme-kirisame/layouts/PostLayout.astro';
+import { config } from '../../site.config';
+import { getPosts, summary } from '../../lib/posts';
+import '../../styles/custom.css';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map(entry => ({ params: { slug: entry.id }, props: { entry, related: posts.filter(other => other.id !== entry.id).slice(0, 3).map(summary) } }));
+}
+const { entry, related } = Astro.props;
+const { Content, headings } = await render(entry);
+---
+<PostLayout config={config} post={summary(entry)} headings={headings} related={related}><Content /></PostLayout>

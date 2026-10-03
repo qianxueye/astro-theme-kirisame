@@ -1,0 +1,5 @@
+---
+interface Props { enabled?: boolean; label?: string }
+const { enabled = false, label = '广告' } = Astro.props;
+---
+{enabled && <aside class="ad-slot" aria-label={label} data-pagefind-ignore><span>{label}</span><slot /></aside>}

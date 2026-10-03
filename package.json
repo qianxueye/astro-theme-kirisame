@@ -1,0 +1,19 @@
+{
+  "name": "kirisame-workspace",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@10.26.2",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter kirisame-example dev",
+    "build": "pnpm --filter kirisame-example build",
+    "check": "pnpm --filter kirisame-example check",
+    "preview": "pnpm --filter kirisame-example preview",
+    "test": "node --test tests/*.test.mjs",
+    "test:dist": "node scripts/verify-dist.mjs",
+    "pack:theme": "pnpm --filter @qianxueye/astro-theme-kirisame pack --pack-destination ../../artifacts"
+  }
+}

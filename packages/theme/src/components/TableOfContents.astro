@@ -1,0 +1,8 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Icon from './Icon.astro';
+interface Props { headings: MarkdownHeading[]; mobile?: boolean }
+const { headings, mobile = false } = Astro.props;
+const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+{toc.length > 0 && (mobile ? <details class="mobile-toc"><summary>本文目录<Icon name="down" /></summary><ol>{toc.map(h => <li class:list={[{ 'toc-sub': h.depth === 3 }]}><a href={`#${h.slug}`} data-anchor={h.slug}>{h.text}</a></li>)}</ol></details> : <nav class="toc" aria-label="本文目录"><h2>本文目录</h2><ol>{toc.map(h => <li class:list={[{ 'toc-sub': h.depth === 3 }]}><a href={`#${h.slug}`} data-anchor={h.slug}>{h.text}</a></li>)}</ol></nav>)}

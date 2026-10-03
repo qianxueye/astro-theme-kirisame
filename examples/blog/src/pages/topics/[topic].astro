@@ -1,0 +1,13 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import PostList from '@qianxueye/astro-theme-kirisame/components/PostList.astro';
+import { config } from '../../site.config';
+import { getPosts, summary, topics } from '../../lib/posts';
+import '../../styles/custom.css';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return topics(posts).map(topic => ({ params: { topic: topic.name }, props: { topic, posts: posts.filter(post => post.data.topic === topic.name).map(summary) } }));
+}
+const { topic, posts } = Astro.props;
+---
+<SiteLayout config={config} title={topic.name}><section class="index-page" data-page="topic"><header class="index-heading"><span class="eyebrow">专题 · {topic.count} 篇</span><h1>{topic.name}</h1></header><div class="topic-post-list"><PostList posts={posts} /></div></section></SiteLayout>

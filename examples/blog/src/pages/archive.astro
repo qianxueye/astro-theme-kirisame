@@ -1,0 +1,10 @@
+---
+import SiteLayout from '@qianxueye/astro-theme-kirisame/layouts/SiteLayout.astro';
+import PostList from '@qianxueye/astro-theme-kirisame/components/PostList.astro';
+import { config } from '../site.config';
+import { getPosts, summary } from '../lib/posts';
+import '../styles/custom.css';
+const posts = (await getPosts()).map(summary);
+const years = [...new Set(posts.map(post => post.published.getUTCFullYear()))];
+---
+<SiteLayout config={config} title="归档"><section class="index-page" data-page="archive"><header class="index-heading"><span class="eyebrow">沿着时间读</span><h1>所有记录。</h1><p>{posts.length} 篇文章，慢慢积累。</p></header>{years.map(year => <div class="archive-layout"><h2>{year}</h2><PostList posts={posts.filter(post => post.published.getUTCFullYear() === year)} /></div>)}</section></SiteLayout>
