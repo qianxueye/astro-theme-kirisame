@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@qianxueye/astro-theme-kirisame": "workspace:*",
-    "astro": "7.3.5"
+    "astro": "7.4.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
